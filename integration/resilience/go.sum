@@ -12,7 +12,7 @@ github.com/faustbrian/go-circuit-breaker v1.0.0 h1:77UQzAgaARo/+ENv8fyO1bL08d0Jk
 github.com/faustbrian/go-circuit-breaker v1.0.0/go.mod h1:tJ8Xfrv6DG0NiGErqKERXkiBLsyNzOIZ5MZVoD36jEU=
 github.com/faustbrian/go-resilience v1.0.0 h1:ldeYsYsJiC46Vs2gvN+m/pQvZBYmjqPisCXm7uFKelY=
 github.com/faustbrian/go-resilience v1.0.0/go.mod h1:Mae7tmxMXqaSjuOyhIK8Jjq36oBE64+KOvIaLYh2dp8=
-github.com/faustbrian/go-retry v1.0.0 h1:/8PJjc4kX+fmtZlfDnIQ535Cmwpaeso6ZTI87QfF1Ro=
+github.com/faustbrian/go-retry v1.0.0 h1:mi3qOYQTHqjSpBVGG8GcjNHl/MbuVe23SFTqWB7PLLU=
 github.com/faustbrian/go-retry v1.0.0/go.mod h1:j4dVz5BmIqhx+jwx6JvSTEbnK5KCf5yIH6LSirDR19w=
 go.uber.org/goleak v1.3.0 h1:2K3zAYmnTNqV73imy9J1T3WC+gmCePx2hEGkimedGto=
 go.uber.org/goleak v1.3.0/go.mod h1:CoHD4mav9JJNrW/WLlf7HGZPjdw8EucARQHekz1X6bE=
