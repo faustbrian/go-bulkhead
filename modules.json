@@ -1,0 +1,238 @@
+{
+  "schema_version": 1,
+  "repository": "github.com/faustbrian/go-bulkhead",
+  "go_version": "1.26.6",
+  "modules": [
+    {
+      "directory": ".",
+      "module_path": "github.com/faustbrian/go-bulkhead",
+      "go_version": "1.26.6",
+      "packages": [
+        {
+          "module_directory": ".",
+          "directory": ".",
+          "name": "bulkhead",
+          "import_path": "github.com/faustbrian/go-bulkhead",
+          "kind": "public",
+          "production": true,
+          "executable": true,
+          "coverage_required": true,
+          "build_required": true,
+          "build_tags": []
+        }
+      ],
+      "purpose": "`bulkhead` is a process-local, fixed-capacity isolation policy for finite resources. It combines caller-owned resource identity, weighted concurrency, immediate rejection or strict FIFO bounded waiting, bounded explicit partitions, lifecycle observations, and graceful drain.",
+      "lifecycle": "stable",
+      "kind": "public library",
+      "releasable": true,
+      "family": "resilience",
+      "family_label": "Resilience",
+      "family_description": "Explicit admission, isolation, retry, amplification, and failure policies.",
+      "family_order": 5,
+      "version": "v1.0.0",
+      "tag_prefix": "v",
+      "owned_dependencies": [],
+      "reverse_owned_dependencies": [
+        "github.com/faustbrian/go-bulkhead/benchmarks/comparison",
+        "github.com/faustbrian/go-bulkhead/integration/resilience",
+        "github.com/faustbrian/go-service/integration/adoption",
+        "github.com/faustbrian/go-service/integration/reference-external"
+      ],
+      "external_runtime_dependencies": [
+        "github.com/failsafe-go/failsafe-go",
+        "go.uber.org/goleak",
+        "golang.org/x/sync"
+      ],
+      "required_services": [],
+      "build_tags": [],
+      "test_tags": [],
+      "interoperability_tools": [],
+      "specifications": [],
+      "conformance_corpora": [],
+      "provenance": [],
+      "goal_files": [
+        ".ai/GOAL.md",
+        ".ai/GOAL_HARDEN.md"
+      ],
+      "goal_status": "implementation-evidence-inventoried",
+      "goal_evidence": [
+        {
+          "file": ".ai/GOAL.md",
+          "requirements_sha256": "fae5d82e8196abea3400fdbb743261dd2358dd8e5fe6fd7ca7df0e709aeec5bd",
+          "implementation_evidence": [
+            "CHANGELOG.md",
+            "README.md",
+            "docs/README.md",
+            "docs/api.md",
+            "docs/architecture.md",
+            "docs/hardening-audit.md",
+            "docs/performance.md",
+            "docs/security.md"
+          ],
+          "verification_gates": [
+            "format-check",
+            "tidy-check",
+            "safety",
+            "vet",
+            "test",
+            "race",
+            "coverage",
+            "lint",
+            "staticcheck",
+            "vulnerability",
+            "secrets",
+            "licenses",
+            "sbom",
+            "fuzz",
+            "mutation",
+            "nilaway",
+            "docs",
+            "api",
+            "conformance",
+            "interoperability",
+            "benchmark"
+          ],
+          "implementation_status": "implemented-requires-fresh-verification"
+        },
+        {
+          "file": ".ai/GOAL_HARDEN.md",
+          "requirements_sha256": "2a39503da04d97a222b9e63addd1d9e13129cb4e5a7e7f17eeaa0f24ad3442be",
+          "implementation_evidence": [
+            "CHANGELOG.md",
+            "README.md",
+            "docs/README.md",
+            "docs/api.md",
+            "docs/architecture.md",
+            "docs/hardening-audit.md",
+            "docs/performance.md",
+            "docs/security.md"
+          ],
+          "verification_gates": [
+            "format-check",
+            "tidy-check",
+            "safety",
+            "vet",
+            "test",
+            "race",
+            "coverage",
+            "lint",
+            "staticcheck",
+            "vulnerability",
+            "secrets",
+            "licenses",
+            "sbom",
+            "fuzz",
+            "mutation",
+            "nilaway",
+            "docs",
+            "api",
+            "conformance",
+            "interoperability",
+            "benchmark"
+          ],
+          "implementation_status": "implemented-requires-fresh-verification"
+        }
+      ],
+      "gates": {
+        "api_compatibility": true,
+        "benchmarks": true,
+        "conformance": false,
+        "coverage": true,
+        "documentation": true,
+        "fuzz": true,
+        "lint": true,
+        "mutation": true,
+        "race": true,
+        "security": true,
+        "tests": true
+      }
+    },
+    {
+      "directory": "benchmarks/comparison",
+      "module_path": "github.com/faustbrian/go-bulkhead/benchmarks/comparison",
+      "go_version": "1.26.6",
+      "packages": [],
+      "purpose": "This non-releasable benchmark module isolates comparison dependencies from the public bulkhead module. It measures capacity-one admitted and saturated paths for the local bulkhead, direct `x/sync/semaphore`, Failsafe-Go, and Fortify.",
+      "lifecycle": "internal",
+      "kind": "benchmark harness",
+      "releasable": false,
+      "version": "unreleased",
+      "tag_prefix": "benchmarks/comparison/v",
+      "owned_dependencies": [
+        "github.com/faustbrian/go-bulkhead"
+      ],
+      "reverse_owned_dependencies": [],
+      "external_runtime_dependencies": [
+        "github.com/failsafe-go/failsafe-go",
+        "go.klarlabs.de/fortify",
+        "golang.org/x/sync"
+      ],
+      "required_services": [],
+      "build_tags": [],
+      "test_tags": [],
+      "interoperability_tools": [],
+      "specifications": [],
+      "conformance_corpora": [],
+      "provenance": [],
+      "goal_files": [],
+      "goal_status": "not-applicable",
+      "goal_evidence": [],
+      "gates": {
+        "api_compatibility": false,
+        "benchmarks": false,
+        "conformance": false,
+        "coverage": false,
+        "documentation": true,
+        "fuzz": false,
+        "lint": true,
+        "mutation": false,
+        "race": false,
+        "security": true,
+        "tests": true
+      }
+    },
+    {
+      "directory": "integration/resilience",
+      "module_path": "github.com/faustbrian/go-bulkhead/integration/resilience",
+      "go_version": "1.26.6",
+      "packages": [],
+      "purpose": "This non-releasable integration module proves the application-owned resilience ordering through the public bulkhead, retry, and circuit-breaker contracts. Local bulkhead admission failure remains a permanent retry outcome and occurs before circuit-breaker admission, so it neither amplifies attempts nor records a downstream failure.",
+      "lifecycle": "internal",
+      "kind": "interoperability harness",
+      "releasable": false,
+      "version": "unreleased",
+      "tag_prefix": "integration/resilience/v",
+      "owned_dependencies": [
+        "github.com/faustbrian/go-bulkhead",
+        "github.com/faustbrian/go-circuit-breaker",
+        "github.com/faustbrian/go-resilience",
+        "github.com/faustbrian/go-retry"
+      ],
+      "reverse_owned_dependencies": [],
+      "external_runtime_dependencies": [],
+      "required_services": [],
+      "build_tags": [],
+      "test_tags": [],
+      "interoperability_tools": [],
+      "specifications": [],
+      "conformance_corpora": [],
+      "provenance": [],
+      "goal_files": [],
+      "goal_status": "not-applicable",
+      "goal_evidence": [],
+      "gates": {
+        "api_compatibility": false,
+        "benchmarks": false,
+        "conformance": false,
+        "coverage": false,
+        "documentation": true,
+        "fuzz": false,
+        "lint": true,
+        "mutation": false,
+        "race": false,
+        "security": true,
+        "tests": true
+      }
+    }
+  ]
+}

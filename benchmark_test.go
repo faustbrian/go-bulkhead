@@ -11,7 +11,7 @@ import (
 	"time"
 
 	failsafebulkhead "github.com/failsafe-go/failsafe-go/bulkhead"
-	"github.com/faustbrian/golib/pkg/bulkhead"
+	"github.com/faustbrian/go-bulkhead"
 	"golang.org/x/sync/semaphore"
 )
 

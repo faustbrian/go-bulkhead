@@ -5,7 +5,7 @@ import (
 	"testing"
 
 	failsafebulkhead "github.com/failsafe-go/failsafe-go/bulkhead"
-	"github.com/faustbrian/golib/pkg/bulkhead"
+	"github.com/faustbrian/go-bulkhead"
 	fortifybulkhead "go.klarlabs.de/fortify/bulkhead"
 	"golang.org/x/sync/semaphore"
 )

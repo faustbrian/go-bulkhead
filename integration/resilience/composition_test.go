@@ -7,9 +7,9 @@ import (
 	"testing"
 	"time"
 
-	"github.com/faustbrian/golib/pkg/bulkhead"
-	breaker "github.com/faustbrian/golib/pkg/circuit-breaker"
-	"github.com/faustbrian/golib/pkg/retry"
+	"github.com/faustbrian/go-bulkhead"
+	breaker "github.com/faustbrian/go-circuit-breaker"
+	"github.com/faustbrian/go-retry"
 )
 
 func TestBulkheadRejectionIsNeitherRetriedNorRecordedAsDownstreamFailure(t *testing.T) {

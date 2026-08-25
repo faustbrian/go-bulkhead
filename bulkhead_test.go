@@ -5,7 +5,7 @@ import (
 	"errors"
 	"testing"
 
-	"github.com/faustbrian/golib/pkg/bulkhead"
+	"github.com/faustbrian/go-bulkhead"
 )
 
 func TestImmediateAdmissionConservesCapacityAndRejectsOverflow(t *testing.T) {

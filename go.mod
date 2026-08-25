@@ -1,4 +1,4 @@
-module github.com/faustbrian/golib/pkg/bulkhead
+module github.com/faustbrian/go-bulkhead
 
 go 1.26.6
 

@@ -9,5 +9,5 @@ a downstream failure.
 Run from the repository workspace with:
 
 ```sh
-go test ./pkg/bulkhead/integration/resilience/...
+go test ./integration/resilience/...
 ```

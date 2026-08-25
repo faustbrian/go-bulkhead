@@ -1,7 +1,7 @@
 comparison command: go test -run '^$' -bench . -benchmem -benchtime=500ms -count=5
-comparison package: github.com/faustbrian/golib/pkg/bulkhead/benchmarks/comparison
+comparison package: github.com/faustbrian/go-bulkhead/benchmarks/comparison
 advanced command: GOWORK=off go test -run '^$' -bench 'BenchmarkBulkhead(ParallelThroughput|WaitWakeupLatency|CancellationChurn|FIFOFairness|Observer|Partitions)$' -benchmem -benchtime=500ms -count=5
-advanced package: github.com/faustbrian/golib/pkg/bulkhead
+advanced package: github.com/faustbrian/go-bulkhead
 goos: darwin
 goarch: arm64
 go: 1.26.5

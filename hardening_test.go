@@ -9,7 +9,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/faustbrian/golib/pkg/bulkhead"
+	"github.com/faustbrian/go-bulkhead"
 )
 
 var errHardeningOperation = errors.New("operation failure")

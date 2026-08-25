@@ -10,7 +10,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/faustbrian/golib/pkg/bulkhead"
+	"github.com/faustbrian/go-bulkhead"
 )
 
 func TestRandomizedHistoriesConserveCapacity(t *testing.T) {

@@ -8,7 +8,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/faustbrian/golib/pkg/bulkhead"
+	"github.com/faustbrian/go-bulkhead"
 )
 
 func TestAdmissionAndCloseRaceLinearizesWithoutCapacityLeak(t *testing.T) {
