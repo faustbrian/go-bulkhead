@@ -135,16 +135,8 @@ latency need workload-specific alerting or carefully reviewed custom metrics.
 
 ## Documentation
 
-- [API and ownership](docs/api.md)
-- [Architecture and invariants](docs/architecture.md)
-- [Composition](docs/composition.md)
-- [Kubernetes and sizing](docs/kubernetes.md)
-- [Operations](docs/operations.md)
-- [Migration](docs/migration.md)
-- [Security](docs/security.md)
-- [Performance](docs/performance.md)
-- [Assurance](docs/assurance.md)
-- [FAQ](docs/faq.md)
+Use the [documentation index](docs/README.md) for API, architecture,
+composition, Kubernetes, operations, security, performance, and assurance.
 
 ## License
 
