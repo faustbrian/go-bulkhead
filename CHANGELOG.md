@@ -27,10 +27,6 @@ All notable changes to this module are documented here.
 
 - Publish the module from its standalone `github.com/faustbrian/go-bulkhead` identity while preserving its documented API and behavior.
 
-### Documentation
-
-- Link the package README to the repository-wide Golib documentation portal.
-
 ### Added
 
 - Fixed-capacity and weighted process-local bulkheads with stable resource

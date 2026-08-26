@@ -143,14 +143,9 @@ latency need workload-specific alerting or carefully reviewed custom metrics.
 - [Migration](docs/migration.md)
 - [Security](docs/security.md)
 - [Performance](docs/performance.md)
-- [Verification and hardening](docs/hardening-audit.md)
+- [Assurance](docs/assurance.md)
 - [FAQ](docs/faq.md)
 
 ## License
 
 MIT. See [LICENSE](LICENSE).
-
-## Ecosystem
-
-Use the [Golib documentation portal](https://github.com/faustbrian/golib/blob/main/docs/index.md)
-to choose companion packages, supported stacks, recipes, and operations guidance.
