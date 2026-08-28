@@ -4,6 +4,11 @@ All notable changes to this module are documented here.
 
 ## Unreleased
 
+### Documentation
+
+- Keep the README focused on adoption and move detailed assurance guidance to
+  the package documentation index.
+
 ## 1.0.0 - 2026-08-25
 
 ### Changed
@@ -26,10 +31,6 @@ All notable changes to this module are documented here.
 ### Changed
 
 - Publish the module from its standalone `github.com/faustbrian/go-bulkhead` identity while preserving its documented API and behavior.
-
-### Documentation
-
-- Link the package README to the repository-wide Golib documentation portal.
 
 ### Added
 

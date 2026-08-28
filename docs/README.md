@@ -10,5 +10,5 @@
 | [Migration](migration.md) | Channels, `x/sync/semaphore`, worker pools, and unbounded registries |
 | [Security](security.md) | Identity bounds, cardinality, denial-of-service, and secret handling |
 | [Performance](performance.md) | Equivalent-behavior benchmarks and semantic differences |
-| [Hardening audit](hardening-audit.md) | Requirement mapping, concurrency invariants, and current evidence |
+| [Assurance](assurance.md) | Requirement mapping, concurrency invariants, and current evidence |
 | [FAQ](faq.md) | Selection and behavior questions |

@@ -1,4 +1,4 @@
-# Hardening audit
+# Assurance
 
 ## Reference baseline
 
