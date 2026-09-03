@@ -6,10 +6,19 @@ All notable changes to this module are documented here.
 
 ### Changed
 
+- Adopt the `go-library-tools` v1.3.0 schema-v2 cohesion contract and local
+  `make cohesion` gate without changing the bulkhead API or runtime behavior.
+- Pin reusable CI to the v1.3.0 workflow and enforce cohesion metadata in the
+  repository's required CI contract.
+
 - Replace copied repository tooling with the pinned `go-library-tools` v1.0.13
   contract while retaining package-owned policy and verification evidence.
 
 ### Documentation
+
+- Publish the module's family, capabilities, ownership, lifecycle, supported
+  environments, package selection, and delivery status, and link the README to
+  the immutable v1.3.0 ecosystem index and family guidance.
 
 - Keep the README focused on adoption and move detailed assurance guidance to
   the package documentation index.

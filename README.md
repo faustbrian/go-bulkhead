@@ -138,6 +138,10 @@ latency need workload-specific alerting or carefully reviewed custom metrics.
 Use the [documentation index](docs/README.md) for API, architecture,
 composition, Kubernetes, operations, security, performance, and assurance.
 
+For ecosystem-wide selection and ownership guidance, see the versioned
+[Golib ecosystem index](https://github.com/faustbrian/go-library-tools/blob/v1.3.0/docs/ecosystem/README.md)
+and its [Resilience family](https://github.com/faustbrian/go-library-tools/blob/v1.3.0/docs/ecosystem/design-language.md#package-families-and-selection).
+
 ## License
 
 MIT. See [LICENSE](LICENSE).
