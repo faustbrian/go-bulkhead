@@ -36,6 +36,13 @@ Do not classify it as downstream failure.
 No. Dependency saturation does not imply the process is unhealthy. Treat
 liveness, readiness, alerts, and traffic routing as separate decisions.
 
+## Where do I start troubleshooting saturation?
+
+Follow the [incident runbook](operations.md#incident-runbook). Capture the
+resource and policy revision, active weight, queue depth, rejection reason,
+per-pod traffic distribution, downstream latency, and pool capacity before
+changing capacity or queue bounds.
+
 ## Is reentrancy always detected?
 
 It is detected when the acquisition receives a context derived from

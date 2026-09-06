@@ -61,7 +61,11 @@ permit, err := database.Acquire(ctx, 2)
 if err != nil {
     return err
 }
-defer permit.Release()
+defer func() {
+    if err := permit.Release(); err != nil {
+        log.Printf("release bulkhead permit: %v", err)
+    }
+}()
 ```
 
 Release is concurrency-safe and exactly once. A second release returns
@@ -92,11 +96,20 @@ resource and different instances for independent failure domains. A `Registry`
 provides bounded, application-owned partition identity:
 
 ```go
-registry, _ := bulkhead.NewRegistry(
+registry, err := bulkhead.NewRegistry(
     bulkhead.FixedPartitions{Maximum: 8},
 )
-inventory, _ := registry.Create(inventoryConfig)
-payments, _ := registry.Create(paymentsConfig)
+if err != nil {
+    return err
+}
+inventory, err := registry.Create(inventoryConfig)
+if err != nil {
+    return err
+}
+payments, err := registry.Create(paymentsConfig)
+if err != nil {
+    return err
+}
 ```
 
 Lookup never creates a partition and no package-global registry exists.
@@ -152,11 +165,20 @@ Dependency saturation must not fail liveness. Rejections can lower CPU and make
 CPU-only autoscaling scale the wrong way; queue depth, rejections, and wait
 latency need workload-specific alerting or carefully reviewed custom metrics.
 
+## Package map
+
+| Path | Role | Release status |
+| --- | --- | --- |
+| `github.com/faustbrian/go-bulkhead` | Public process-local bulkhead package | Stable v1 root module |
+| `benchmarks/comparison` | Internal equivalent-behavior comparison harness | Unreleased |
+| `integration/resilience` | Internal resilience-composition harness | Unreleased |
+
 ## Documentation
 
 - [Documentation index](docs/README.md)
 - [API reference](docs/api.md)
 - [Composition and adoption](docs/composition.md)
+- [Saturation troubleshooting](docs/operations.md#incident-runbook)
 - [Support](SUPPORT.md)
 - [Security policy and reporting guidance](SECURITY.md)
 - [Compatibility policy](COMPATIBILITY.md)
