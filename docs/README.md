@@ -3,6 +3,7 @@
 ## Getting started
 
 - [Install and quick start](../README.md#install)
+- [Package and internal harness map](../README.md#package-map)
 - [Executable examples](../example_test.go)
 - [Package API](https://pkg.go.dev/github.com/faustbrian/go-bulkhead)
 
@@ -14,7 +15,7 @@
 | [Architecture](architecture.md) | Ownership, synchronization, fairness, bounds, and dependency boundary |
 | [Composition](composition.md) | Retry, breaker, rate, adaptive limit, hedge, cache, timeout, and fallback order |
 | [Kubernetes](kubernetes.md) | Per-pod sizing, HPA, rollout, readiness, and termination |
-| [Operations](operations.md) | Metrics, alerts, dashboards, incidents, and drain runbook |
+| [Operations](operations.md) | Metrics, alerts, troubleshooting, incidents, and drain runbook |
 | [Migration](migration.md) | Channels, `x/sync/semaphore`, worker pools, and unbounded registries |
 | [Security](security.md) | Identity bounds, cardinality, denial-of-service, and secret handling |
 | [Performance](performance.md) | Equivalent-behavior benchmarks and semantic differences |
@@ -23,6 +24,7 @@
 
 ## Support and maintenance
 
+- [Saturation troubleshooting](operations.md#incident-runbook)
 - [Support](../SUPPORT.md)
 - [Security policy and reporting guidance](../SECURITY.md)
 - [Compatibility policy](../COMPATIBILITY.md)

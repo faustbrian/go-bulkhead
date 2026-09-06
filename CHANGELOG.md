@@ -21,6 +21,11 @@ All notable changes to this module are documented here.
 
 ### Documentation
 
+- Document the public package and internal harness map, add direct saturation
+  troubleshooting, bind package-owned documentation verification, handle
+  public cleanup errors in examples, clarify module tag conventions, route
+  support and vulnerability reports, and correct the v1.0.0 release date.
+
 - Add canonical v1 installation, stable Go support, lifecycle and ownership,
   project support, and security-reporting guidance.
 
@@ -34,7 +39,7 @@ All notable changes to this module are documented here.
 - Keep the README focused on adoption and move detailed assurance guidance to
   the package documentation index.
 
-## 1.0.0 - 2026-08-25
+## 1.0.0 - 2026-08-26
 
 ### Changed
 

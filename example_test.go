@@ -59,11 +59,20 @@ func ExampleRegistry() {
 	paymentPermit, paymentErr := payments.Acquire(context.Background(), 1)
 	if paymentErr != nil {
 		fmt.Println(paymentErr)
+		if err := inventoryPermit.Release(); err != nil {
+			fmt.Println(err)
+		}
 		return
 	}
 	fmt.Println(paymentErr, registry.Len())
-	_ = inventoryPermit.Release()
-	_ = paymentPermit.Release()
+	if err := inventoryPermit.Release(); err != nil {
+		fmt.Println(err)
+		return
+	}
+	if err := paymentPermit.Release(); err != nil {
+		fmt.Println(err)
+		return
+	}
 	// Output:
 	// <nil> 2
 }
@@ -79,8 +88,14 @@ func ExampleBulkhead_Drain() {
 		fmt.Println(err)
 		return
 	}
-	_ = database.Close()
-	_ = permit.Release()
+	if err := database.Close(); err != nil {
+		fmt.Println(err)
+		return
+	}
+	if err := permit.Release(); err != nil {
+		fmt.Println(err)
+		return
+	}
 
 	drainContext, cancel := context.WithTimeout(context.Background(), 100*time.Millisecond)
 	defer cancel()
