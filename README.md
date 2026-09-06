@@ -19,6 +19,14 @@ It is not a worker pool, queue, rate limiter, circuit breaker, retry engine,
 timeout, adaptive limiter, distributed lock, or cluster-wide concurrency
 control.
 
+The module is a stable v1 public library. It requires Go 1.26.6 or newer.
+
+## Install
+
+```sh
+go get github.com/faustbrian/go-bulkhead@v1
+```
+
 ## Quick start
 
 ```go
@@ -124,6 +132,17 @@ Application shutdown order is:
 `Close` and `Drain` are idempotent with respect to admission closure. Abrupt
 process termination cannot provide completion evidence.
 
+## Lifecycle and ownership
+
+A `Bulkhead` owns bounded in-memory admission state and starts no goroutines or
+network I/O. It is safe for concurrent use. Callers own operation contexts and
+protected work; injected clocks and observers retain their own concurrency and
+resource responsibilities. Before discarding a policy, applications close
+admission and drain accepted work under an application-owned deadline.
+
+Registries are application-owned, bounded in-memory partition indexes. Removing
+a partition does not close or drain it on the application's behalf.
+
 ## Kubernetes sizing
 
 Capacity is per process and therefore per pod. For detailed equations using
@@ -135,8 +154,13 @@ latency need workload-specific alerting or carefully reviewed custom metrics.
 
 ## Documentation
 
-Use the [documentation index](docs/README.md) for API, architecture,
-composition, Kubernetes, operations, security, performance, and assurance.
+- [Documentation index](docs/README.md)
+- [API reference](docs/api.md)
+- [Composition and adoption](docs/composition.md)
+- [Support](SUPPORT.md)
+- [Security policy and reporting guidance](SECURITY.md)
+- [Compatibility policy](COMPATIBILITY.md)
+- [Release history](CHANGELOG.md)
 
 For ecosystem-wide selection and ownership guidance, see the versioned
 [Golib ecosystem index](https://github.com/faustbrian/go-library-tools/blob/v1.4.0/docs/ecosystem/README.md)

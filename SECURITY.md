@@ -1,8 +1,26 @@
 # Security policy
 
-Report vulnerabilities privately to the repository owner. Do not include
-credentials, production payloads, customer identifiers, or arbitrary resource
-labels in reports.
+## Supported versions
+
+The latest stable v1 release receives security fixes. Older releases and the
+`main` branch are unsupported; upgrade before reporting unless the issue is a
+regression under active development.
+
+| Version | Supported |
+| --- | --- |
+| Latest stable v1 release | Yes |
+| Older releases | No |
+| `main` | No |
+
+## Reporting a vulnerability
+
+Do not disclose a suspected vulnerability in a public issue. Use the
+repository's private security reporting facility when available. If private
+reporting is unavailable, ask a maintainer for a private contact channel
+without disclosing the vulnerability.
+
+Do not include credentials, production payloads, customer identifiers, or
+arbitrary resource labels in a public report or initial contact request.
 
 Bulkheads are process-local availability controls, not authorization or
 distributed coordination. Applications must bound resource identity, partition

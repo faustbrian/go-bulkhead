@@ -21,6 +21,9 @@ All notable changes to this module are documented here.
 
 ### Documentation
 
+- Add canonical v1 installation, stable Go support, lifecycle and ownership,
+  project support, and security-reporting guidance.
+
 - Link ecosystem and Resilience family guidance to the immutable v1.4.0
   documentation release.
 

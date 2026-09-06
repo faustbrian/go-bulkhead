@@ -1,5 +1,13 @@
 # Documentation
 
+## Getting started
+
+- [Install and quick start](../README.md#install)
+- [Executable examples](../example_test.go)
+- [Package API](https://pkg.go.dev/github.com/faustbrian/go-bulkhead)
+
+## Guides
+
 | Guide | Purpose |
 | --- | --- |
 | [API](api.md) | Construction, admission, permits, execution, errors, observations, and drain |
@@ -12,3 +20,12 @@
 | [Performance](performance.md) | Equivalent-behavior benchmarks and semantic differences |
 | [Assurance](assurance.md) | Requirement mapping, concurrency invariants, and current evidence |
 | [FAQ](faq.md) | Selection and behavior questions |
+
+## Support and maintenance
+
+- [Support](../SUPPORT.md)
+- [Security policy and reporting guidance](../SECURITY.md)
+- [Compatibility policy](../COMPATIBILITY.md)
+- [Contribution guide](../CONTRIBUTING.md)
+- [Release history](../CHANGELOG.md)
+- [License](../LICENSE)
