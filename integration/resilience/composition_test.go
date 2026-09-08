@@ -34,7 +34,7 @@ func TestBulkheadRejectionIsNeitherRetriedNorRecordedAsDownstreamFailure(t *test
 	if err != nil {
 		t.Fatalf("breaker.New() error = %v", err)
 	}
-	retryPolicy, err := retry.NewPolicy(retry.Config{
+	retryPolicy, err := retry.NewPolicyStrict(retry.Config{
 		Backoff:     retry.Constant(0),
 		MaxAttempts: 3,
 		Clock:       retry.SystemClock{},
@@ -42,12 +42,12 @@ func TestBulkheadRejectionIsNeitherRetriedNorRecordedAsDownstreamFailure(t *test
 		Classifier:  retry.RetryableClassifier(),
 	})
 	if err != nil {
-		t.Fatalf("retry.NewPolicy() error = %v", err)
+		t.Fatalf("retry.NewPolicyStrict() error = %v", err)
 	}
 
 	var logicalAttempts atomic.Uint64
 	var downstreamCalls atomic.Uint64
-	_, result, err := retry.Do(context.Background(), retryPolicy, func(ctx context.Context) (struct{}, error) {
+	result, err := retry.DoStrict(context.Background(), retryPolicy, func(ctx context.Context) (retry.AttemptResult[struct{}], error) {
 		logicalAttempts.Add(1)
 		value, _, executeErr := bulkhead.Execute(ctx, policy, 1, func(ctx context.Context) (struct{}, error) {
 			return breaker.Execute(ctx, circuit, func(context.Context) (struct{}, error) {
@@ -55,12 +55,13 @@ func TestBulkheadRejectionIsNeitherRetriedNorRecordedAsDownstreamFailure(t *test
 				return struct{}{}, errors.New("downstream failure")
 			})
 		})
-		return value, executeErr
+		return retry.AttemptResult[struct{}]{Value: value, Outcome: retry.OutcomeKnown}, executeErr
 	})
 	if !errors.Is(err, bulkhead.ErrRejected) {
-		t.Fatalf("retry.Do() error = %v, want ErrRejected", err)
+		t.Fatalf("retry.DoStrict() error = %v, want ErrRejected", err)
 	}
-	if result.Attempts != 1 || result.Reason != retry.ReasonPermanent || logicalAttempts.Load() != 1 {
+	if result.Outcome != retry.OutcomeKnown || result.Retry.Attempts != 1 ||
+		result.Retry.Reason != retry.ReasonPermanent || logicalAttempts.Load() != 1 {
 		t.Fatalf("retry result = %+v, logical attempts = %d", result, logicalAttempts.Load())
 	}
 	if downstreamCalls.Load() != 0 {
