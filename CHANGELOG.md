@@ -6,6 +6,11 @@ All notable changes to this module are documented here.
 
 ### Changed
 
+- Upgrade the non-releasable resilience composition to Retry v1.1.0 and its
+  strict policy, execution, and known-outcome contract so local bulkhead
+  rejection remains conclusively non-retryable without implying an ambiguous
+  downstream side effect.
+
 - Adopt the checksum-verified `go-library-tools` v1.4.0 CLI and immutable W14
   reusable workflow, and reconcile nested Golib dependency checksums with
   their published v1.0.0 archives without changing selected versions, the
