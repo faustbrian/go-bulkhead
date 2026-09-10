@@ -9,6 +9,7 @@ require (
 )
 
 require (
+	github.com/failsafe-go/failsafe-go v0.9.7 // indirect
 	github.com/faustbrian/go-resilience v1.0.0 // indirect
 	golang.org/x/sync v0.22.0 // indirect
 )
