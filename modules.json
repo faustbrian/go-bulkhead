@@ -1,12 +1,12 @@
 {
   "schema_version": 2,
   "repository": "github.com/faustbrian/go-bulkhead",
-  "go_version": "1.26.6",
+  "go_version": "1.27.0",
   "modules": [
     {
       "directory": ".",
       "module_path": "github.com/faustbrian/go-bulkhead",
-      "go_version": "1.26.6",
+      "go_version": "1.27.0",
       "packages": [
         {
           "module_directory": ".",
@@ -98,9 +98,9 @@
           "github.com/faustbrian/go-semaphore"
         ],
         "supported_go": {
-          "minimum": "1.26.6",
+          "minimum": "1.27.0",
           "tested": [
-            "1.26.6"
+            "1.27.0"
           ]
         },
         "supported_platforms": [
@@ -145,7 +145,7 @@
     {
       "directory": "benchmarks/comparison",
       "module_path": "github.com/faustbrian/go-bulkhead/benchmarks/comparison",
-      "go_version": "1.26.6",
+      "go_version": "1.27.0",
       "packages": [],
       "purpose": "This non-releasable benchmark module isolates comparison dependencies from the public bulkhead module. It measures capacity-one admitted and saturated paths for the local bulkhead, direct `x/sync/semaphore`, Failsafe-Go, and Fortify.",
       "lifecycle": "internal",
@@ -193,7 +193,7 @@
     {
       "directory": "integration/resilience",
       "module_path": "github.com/faustbrian/go-bulkhead/integration/resilience",
-      "go_version": "1.26.6",
+      "go_version": "1.27.0",
       "packages": [],
       "purpose": "This non-releasable integration module proves the application-owned resilience ordering through the public bulkhead, retry, and circuit-breaker contracts. Local bulkhead admission failure remains a permanent retry outcome and occurs before circuit-breaker admission, so it neither amplifies attempts nor records a downstream failure.",
       "lifecycle": "internal",
