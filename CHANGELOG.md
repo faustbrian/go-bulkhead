@@ -6,6 +6,10 @@ All notable changes to this module are documented here.
 
 ### Changed
 
+- Update the comparison harness to Fortify v1.10.0 and select patched gRPC
+  v1.83.2 for its dependency graph, retaining the public bulkhead API and
+  runtime behavior while clearing the introduced security advisories.
+
 - Upgrade the non-releasable resilience composition to Retry v1.1.0 and its
   strict policy, execution, and known-outcome contract so local bulkhead
   rejection remains conclusively non-retryable without implying an ambiguous

@@ -5,8 +5,16 @@ go 1.27.0
 require (
 	github.com/failsafe-go/failsafe-go v0.9.6
 	github.com/faustbrian/go-bulkhead v1.0.0
-	go.klarlabs.de/fortify v1.6.0
+	go.klarlabs.de/fortify v1.10.0
 	golang.org/x/sync v0.22.0
 )
 
-require github.com/bits-and-blooms/bitset v1.24.4 // indirect
+require (
+	github.com/bits-and-blooms/bitset v1.24.4 // indirect
+	golang.org/x/net v0.58.0 // indirect
+	golang.org/x/sys v0.47.0 // indirect
+	golang.org/x/text v0.41.0 // indirect
+	google.golang.org/genproto/googleapis/rpc v0.0.0-20260630182238-925bb5da69e7 // indirect
+	google.golang.org/grpc v1.83.2 // indirect
+	google.golang.org/protobuf v1.36.11 // indirect
+)
