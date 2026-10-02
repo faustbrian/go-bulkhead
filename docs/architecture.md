@@ -4,7 +4,7 @@
 
 The `Bulkhead` mutex is the single synchronization owner for policy state:
 active weight, FIFO waiter list, queue depth, counters, drain state, and
-partition-local events. `golang.org/x/sync/semaphore` v0.22.0 owns low-level
+partition-local events. `golang.org/x/sync/semaphore` v0.23.0 owns low-level
 weighted permit accounting. The package never duplicates the semaphore's
 capacity algorithm; it adds resource identity, queue policy, lifecycle, and
 observability around `TryAcquire`.
