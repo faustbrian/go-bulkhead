@@ -4,7 +4,18 @@ All notable changes to this module are documented here.
 
 ## Unreleased
 
+## 1.1.0 - 2026-10-02
+
 ### Changed
+
+- Raise the minimum supported Go version from 1.26.6 to 1.27.0. Consumers
+  must upgrade their toolchain to use this release; the public API and
+  runtime behavior remain unchanged.
+
+- Update the runtime semaphore dependency to x/sync v0.23.0 while retaining
+  the existing capacity validation, admission, and permit behavior.
+
+- Update the comparison harness to Failsafe-Go v0.9.7.
 
 - Update the comparison harness to Fortify v1.10.0 and select patched gRPC
   v1.83.2 for its dependency graph, retaining the public bulkhead API and
@@ -70,6 +81,10 @@ All notable changes to this module are documented here.
 ### Changed
 
 - Publish the module from its standalone `github.com/faustbrian/go-bulkhead` identity while preserving its documented API and behavior.
+
+### Documentation
+
+- Link the package README to the repository-wide Golib documentation portal.
 
 ### Added
 

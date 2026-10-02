@@ -45,7 +45,7 @@ terminated safely by this package.
 ## Supply chain
 
 Production permit accounting uses `golang.org/x/sync` v0.23.0. Failsafe-Go
-v0.9.6 and goleak v1.3.0 are test/benchmark dependencies. Exact checksums are
+v0.9.7 and goleak v1.3.0 are test/benchmark dependencies. Exact checksums are
 in `go.sum`; repository automation defines vulnerability, license, SBOM,
 secret, and provenance checks. Their configured presence is not proof that a
 particular source revision passed; consult the exact revision's CI results.
