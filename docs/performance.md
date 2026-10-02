@@ -3,9 +3,9 @@
 The non-releasable `benchmarks/comparison` module compares:
 
 - this package's admission policy and owned permit;
-- direct `golang.org/x/sync/semaphore` v0.22.0 permit accounting;
+- direct `golang.org/x/sync/semaphore` v0.23.0 permit accounting;
 - Failsafe-Go v0.9.6 unit-permit bulkhead behavior; and
-- Fortify v1.6.0 unit-permit bulkhead execution.
+- Fortify v1.10.0 unit-permit bulkhead execution.
 
 The fast-path comparison has equivalent capacity-one acquire/release behavior.
 It is not semantically identical: direct x/sync lacks resource identity,
