@@ -2,6 +2,9 @@
 
 ## Threat model
 
+The versioned [security model v1](security/threat-model-v1.md) records the
+audited boundaries, evidence, residual-risk owners, and review conditions.
+
 Untrusted callers may attempt to create high-cardinality resource identities,
 fill queues, request pathological weights, hold operations indefinitely,
 trigger observer failures, or cause retry amplification.
@@ -31,9 +34,18 @@ saturation by adding retries, hedges, or unbounded partitions. Operations that
 ignore cancellation can exhaust capacity; enforce transport deadlines and
 audit callback cancellation.
 
+Observers and custom clocks are trusted application code, not a sandboxed
+extension boundary. Observers run synchronously and must return promptly;
+an observer that blocks can delay admission, release, and shutdown even though
+its errors and panics are isolated. Custom clocks must be concurrency-safe,
+prompt, non-panicking, and supply live stoppable timers. Keep the default clock
+unless a controlled implementation is needed. Neither callback can be forcibly
+terminated safely by this package.
+
 ## Supply chain
 
 Production permit accounting uses `golang.org/x/sync` v0.22.0. Failsafe-Go
 v0.9.6 and goleak v1.3.0 are test/benchmark dependencies. Exact checksums are
-in `go.sum`; repository gates run vulnerability, license, SBOM, secret, and
-provenance checks.
+in `go.sum`; repository automation defines vulnerability, license, SBOM,
+secret, and provenance checks. Their configured presence is not proof that a
+particular source revision passed; consult the exact revision's CI results.
