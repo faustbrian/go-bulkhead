@@ -4,6 +4,12 @@ All notable changes to this module are documented here.
 
 ## Unreleased
 
+### Changed
+
+- Adopt published Retry v2.1 and Resilience v2.0 in the non-releasable resilience
+  integration harness, preserving existing composition behavior and asserting
+  attached-scope retry lineage, bounded admission, refusal, and permit completion.
+
 ## 1.1.0 - 2026-10-02
 
 ### Changed
