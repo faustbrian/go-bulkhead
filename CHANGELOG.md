@@ -4,11 +4,16 @@ All notable changes to this module are documented here.
 
 ## Unreleased
 
+## 1.1.1 - 2026-10-06
+
 ### Changed
 
 - Adopt published Retry v2.1 and Resilience v2.0 in the non-releasable resilience
   integration harness, preserving existing composition behavior and asserting
   attached-scope retry lineage, bounded admission, refusal, and permit completion.
+
+- Refresh the documentation TOML parser lock and pinned library tooling
+  while preserving bulkhead APIs, permit behavior, and the Go support floor.
 
 ## 1.1.0 - 2026-10-02
 
