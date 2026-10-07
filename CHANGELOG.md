@@ -4,6 +4,16 @@ All notable changes to this module are documented here.
 
 ## Unreleased
 
+## 1.1.2 - 2026-10-07
+
+### Changed
+
+- Refresh the coordinated verification source pins while retaining the
+  configured library tooling version and bulkhead APIs and permit behavior.
+- Select Failsafe-Go 0.9.8 across the root dependency graph and internal
+  comparison harnesses. Applications implementing Failsafe builder
+  interfaces should review the newly added methods before upgrading.
+
 ## 1.1.1 - 2026-10-06
 
 ### Changed
