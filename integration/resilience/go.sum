@@ -10,8 +10,8 @@ github.com/failsafe-go/failsafe-go v0.9.8 h1:NzahTEc+vg6FqCJV0Sy9mgwcaCemB81c8iS
 github.com/failsafe-go/failsafe-go v0.9.8/go.mod h1:wMKUFRbxxjWwvwhJttSiim9BaQssrlZV4lk0IwPkwUc=
 github.com/faustbrian/go-bulkhead v1.0.0 h1:7gAwz3eAvUb5qTIxzKMJ7HszvP/gW+Ev5852Gw43VzY=
 github.com/faustbrian/go-bulkhead v1.0.0/go.mod h1:5IThwoOMeB8BH0shbjDAk7Wlaw6y3UE0WyWpvo5Av+o=
-github.com/faustbrian/go-circuit-breaker v1.0.0 h1:/Y9AeAwe0arONfJKhDYveBDosYK67yc21QG09WC9/DY=
-github.com/faustbrian/go-circuit-breaker v1.0.0/go.mod h1:tJ8Xfrv6DG0NiGErqKERXkiBLsyNzOIZ5MZVoD36jEU=
+github.com/faustbrian/go-circuit-breaker v1.0.1 h1:lClA7sa8CItC6KRAlQxR3nuqaq8dx+2yt5HfJmXefPc=
+github.com/faustbrian/go-circuit-breaker v1.0.1/go.mod h1:Mf7ob9yMmEnsrw7t2mnYkgmRqyXAgPiH3eovU3IJTyQ=
 github.com/faustbrian/go-resilience v1.0.0 h1:QLeIh9xvcc5XJ3ANGjk8P7BCbuNFNOWoXkHJdIZJOWM=
 github.com/faustbrian/go-resilience v1.0.0/go.mod h1:Mae7tmxMXqaSjuOyhIK8Jjq36oBE64+KOvIaLYh2dp8=
 github.com/faustbrian/go-resilience/v2 v2.0.0 h1:QobjogckeYjQlkFs3ajWTB14SDSJrHqJiT9JQgkX9RI=
