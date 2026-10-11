@@ -3,7 +3,7 @@
 [![CI](https://github.com/faustbrian/go-bulkhead/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/faustbrian/go-bulkhead/actions/workflows/ci.yml)
 [![CodeQL](https://img.shields.io/badge/CodeQL-required-blue)](https://github.com/faustbrian/go-bulkhead/actions/workflows/ci.yml)
 [![Coverage](https://img.shields.io/badge/coverage-100%25_required-blue)](CONTRIBUTING.md#verification)
-[![Mutation](https://img.shields.io/badge/mutation-100%25_required-blue)](CONTRIBUTING.md#verification)
+[![Mutation](https://img.shields.io/badge/mutation-local_or_scheduled-blue)](CONTRIBUTING.md#verification)
 [![Documentation](https://img.shields.io/badge/docs-checked_in_CI-blue)](docs/)
 [![Go Reference](https://pkg.go.dev/badge/github.com/faustbrian/go-bulkhead.svg)](https://pkg.go.dev/github.com/faustbrian/go-bulkhead)
 [![Release](https://img.shields.io/github/v/release/faustbrian/go-bulkhead?sort=semver)](https://github.com/faustbrian/go-bulkhead/releases)
@@ -174,6 +174,12 @@ latency need workload-specific alerting or carefully reviewed custom metrics.
 | `integration/resilience` | Internal resilience-composition harness | Unreleased |
 
 ## Documentation
+
+Start with `go test ./...` for ordinary source work. `make check` and `make ci`
+use bounded local verification, including focused permit/cancellation/drain race
+assertions. See [contributor guidance](CONTRIBUTING.md#verification) for focused
+fuzzing and selected full/release checks; mutation is optional local or scheduled
+assurance, not a PR prerequisite.
 
 - [Documentation index](docs/README.md)
 - [API reference](docs/api.md)
