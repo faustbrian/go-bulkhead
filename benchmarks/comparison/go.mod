@@ -6,7 +6,7 @@ require (
 	github.com/failsafe-go/failsafe-go v0.9.8
 	github.com/faustbrian/go-bulkhead v1.0.0
 	go.klarlabs.de/fortify v1.10.0
-	golang.org/x/sync v0.23.0
+	golang.org/x/sync v0.24.0
 )
 
 require (
