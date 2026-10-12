@@ -168,3 +168,10 @@ per-pod sizing and application shutdown) remain explicit caller responsibilities
 - No unresolved technical question requires a behavioral change here. Callback
   cooperation, safe labels, bounded aggregate application state and shutdown
   remain caller responsibilities, not guarantees inferred from test counts.
+
+## Objective enforcement adoption
+
+The local `source-docs-check` target is required by ordinary/full checks and CI.
+Shared CI uses `source_documentation: check` with the immutable Tools v2.4.0
+workflow and matching authenticated binary/checksum declaration. Structural
+checks do not replace this maintained semantic audit or native docs/examples.
