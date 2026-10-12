@@ -4,6 +4,12 @@ All notable changes to this module are documented here.
 
 ## Unreleased
 
+### Documentation
+
+- Clarify FIFO grant/cancellation ordering, permit and registry ownership,
+  synchronous observer reentrancy, drain completion boundaries and defensive
+  snapshot semantics in source/API documentation without changing behavior.
+
 ## 1.1.2 - 2026-10-07
 
 ### Changed

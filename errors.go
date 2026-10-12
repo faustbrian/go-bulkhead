@@ -13,11 +13,13 @@ var (
 	ErrQueueFull = errors.New("bulkhead queue full")
 	// ErrWaitTimeout identifies expiration of the configured maximum queue wait.
 	ErrWaitTimeout = errors.New("bulkhead wait timeout")
-	// ErrCallerCanceled identifies cancellation by the acquiring caller.
+	// ErrCallerCanceled identifies nil/canceled acquiring contexts; non-nil context
+	// errors are joined with it. It does not classify an admitted callback's error.
 	ErrCallerCanceled = errors.New("bulkhead caller canceled")
 	// ErrClosed identifies admission after drain has started.
 	ErrClosed = errors.New("bulkhead closed")
-	// ErrDrainIncomplete identifies a caller-bounded drain that ended with live work.
+	// ErrDrainIncomplete identifies a drain that did not establish completion,
+	// joined with context cancellation/deadline (or context.Canceled for nil input).
 	ErrDrainIncomplete = errors.New("bulkhead drain incomplete")
 	// ErrInvalidOperation identifies a nil protected operation.
 	ErrInvalidOperation = errors.New("invalid bulkhead operation")

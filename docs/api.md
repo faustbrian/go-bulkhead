@@ -28,8 +28,9 @@ their own synchronization responsibility.
 
 Positive weights must not exceed total capacity. Queue bounds count every
 enqueued waiter deterministically. Cancellation racing a grant observes the
-lock-ordered winner: a grant returns a permit; an earlier removal returns its
-typed terminal error.
+lock-ordered winner: a committed grant returns a permit even if cancellation is
+observed afterward; an earlier removal returns its typed terminal error. Context
+cancellation itself is not continuously sampled under the grant lock.
 
 ## Permit
 
@@ -47,29 +48,36 @@ panic. It re-panics with the original value after cleanup. It never terminates
 the callback on the caller's behalf. The callback must honor its context when
 bounded termination is required.
 
-The execution context records a private stack of active bulkheads. Recursive
+The execution context records immutable bulkhead ancestry. Recursive
 acquisition of the same instance returns `ErrReentrant`; nested acquisition of
 different instances is allowed. Standalone `Acquire` cannot safely detect
-reentrancy unless it receives an `Execute`-derived context.
+reentrancy unless it receives an `Execute`-derived context. Ancestry remains in
+a retained callback context after return; do not reuse it for new admission on
+an ancestor policy.
 
 ## Observations
 
-`Snapshot` defensively copies rejection counters and exposes capacity, active
-and available weight, queue depth, lifetime admissions, rejections by reason,
+`Snapshot` returns caller-mutable defensive copies of rejection counters and
+exposes capacity, active and available weight, queue depth, lifetime admissions,
+rejections by reason,
 caller cancellations, executions, aggregate wait and execution durations,
 drain state, resource, and policy revision.
 
 `Event` reports admitted, queued, rejected, caller-canceled, released,
 executed, draining, and drained transitions. Observers run synchronously,
-outside all internal locks.
-Their errors and panics are ignored. A slow observer is explicitly part of
-request latency and can affect maximum-wait outcomes.
+outside all internal locks and can overlap or deliver out of state order.
+Their errors and panics are ignored; successful reentrant side effects are not.
+Snapshot/Close reentry is safe, but synchronously waiting for the current call
+to release capacity can deadlock the observer. A slow observer is part of request
+latency and can affect maximum-wait outcomes.
 
 ## Shutdown
 
-`Close` stops admission, marks every queued waiter with `ErrClosed`, and leaves
-admitted permits valid. `Drain(ctx)` also waits until active weight and queued
-callers reach zero. Context termination returns `ErrDrainIncomplete` joined
+`Close` stops admission, marks still-pending queued waiters with `ErrClosed`,
+and leaves committed grants/terminal outcomes and admitted permits intact.
+`Drain(ctx)` waits until active weight and retained queue nodes reach zero, not
+application goroutine or observer completion. A nil drain context fails without
+closing admission. Context termination returns `ErrDrainIncomplete` joined
 with the context error; live capacity is never reclaimed speculatively.
 
 ## Registry
@@ -77,4 +85,5 @@ with the context error; live capacity is never reclaimed speculatively.
 `NewRegistry(FixedPartitions{Maximum: N})` creates an application-owned bounded
 registry. `Create` is the only creation operation. `Lookup` never creates.
 `Remove` requires a closed and drained partition. `Snapshots` returns
-resource-sorted defensive snapshots.
+resource-sorted defensive snapshots sampled individually after copying membership,
+not an atomic cross-partition view.

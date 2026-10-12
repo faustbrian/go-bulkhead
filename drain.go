@@ -5,8 +5,11 @@ import (
 	"errors"
 )
 
-// Close idempotently stops new admission and releases queued callers with
-// ErrClosed. Existing permits remain valid and retain capacity until released.
+// Close idempotently stops new admission and wakes pending queued callers with
+// ErrClosed. Already committed grants/terminal outcomes remain authoritative.
+// Existing permits retain capacity and must be released; protected work is not
+// canceled. Close does not wait for queued callers to remove their nodes or for
+// active work to finish. Observers run synchronously and can delay its return.
 func (bulkhead *Bulkhead) Close() error {
 	bulkhead.mu.Lock()
 	if bulkhead.draining {
@@ -32,8 +35,13 @@ func (bulkhead *Bulkhead) Close() error {
 	return nil
 }
 
-// Drain closes admission and waits for both admitted and queued callers to
-// terminate within ctx. An incomplete result does not reclaim live capacity.
+// Drain closes admission and waits for zero active weight and removed queued
+// nodes, not application goroutine/observer completion. Concurrent calls are safe.
+// Context termination returns ErrDrainIncomplete joined with ctx.Err without
+// reclaiming live capacity. A nil context returns an incomplete/canceled error
+// without closing admission. If completion and cancellation are both ready,
+// either select result may occur. Close's synchronous observer is not forcibly
+// interrupted by ctx; callbacks must cooperate for bounded shutdown latency.
 func (bulkhead *Bulkhead) Drain(ctx context.Context) error {
 	if ctx == nil {
 		return errors.Join(ErrDrainIncomplete, context.Canceled)

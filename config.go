@@ -8,17 +8,20 @@ import (
 )
 
 const (
-	// MaxResourceBytes bounds caller-owned resource labels and metric cardinality payloads.
+	// MaxResourceBytes bounds resource/revision label bytes, not distinct label
+	// counts or secret content.
 	MaxResourceBytes = 128
-	// MaxQueueSize bounds memory retained by a single bulkhead.
+	// MaxQueueSize bounds queued nodes per bulkhead, not caller-retained state.
 	MaxQueueSize = 1 << 20
-	// MaxPartitions bounds memory retained by an explicit partition registry.
+	// MaxPartitions bounds registered policies in one explicit registry.
 	MaxPartitions = 1 << 20
 )
 
 var resourcePattern = regexp.MustCompile(`^[A-Za-z0-9][A-Za-z0-9._:/-]*$`)
 
 // AdmissionPolicy selects immediate rejection or strict FIFO bounded waiting.
+// New accepts only the concrete values RejectImmediately and Wait; nil selects
+// immediate rejection. The private marker is not a custom-policy extension point.
 type AdmissionPolicy interface{ admissionPolicy() }
 
 // RejectImmediately never queues when capacity is unavailable.
@@ -26,49 +29,81 @@ type RejectImmediately struct{}
 
 func (RejectImmediately) admissionPolicy() { _ = "reject-immediately" }
 
-// Wait queues at most MaxQueued callers and waits no longer than MaxWait.
+// Wait bounds the queue and supplies an absolute admission deadline. It does
+// not forcibly interrupt observer callbacks or bound total Acquire wall time.
 // Strict FIFO ordering can cause weighted head-of-line blocking.
 type Wait struct {
+	// MaxQueued is a positive node limit no greater than MaxQueueSize.
+	// Terminal nodes retain their slot until their acquiring caller removes them.
 	MaxQueued int
-	MaxWait   time.Duration
+	// MaxWait is positive and starts at Acquire's initial clock sample.
+	// Queued observer latency consumes this budget; an earlier committed grant
+	// remains admitted even if notification is handled after the deadline.
+	MaxWait time.Duration
 }
 
 func (Wait) admissionPolicy() { _ = "strict-fifo-wait" }
 
-// Clock supplies timestamps and timers for deterministic waiting and observations.
+// Clock supplies timestamps and timers for waiting and observations. Shared
+// implementations must be concurrency-safe, prompt and non-panicking. New uses
+// the standard-library clock when Config.Clock is nil; typed nil is rejected.
 type Clock interface {
+	// Now supplies monotonic-comparable times for absolute deadlines and durations.
 	Now() time.Time
+	// NewTimer returns a non-nil live, stoppable timer for the remaining wait.
 	NewTimer(time.Duration) Timer
 }
 
-// Timer is the clock-owned timer used by bounded admission.
+// Timer is supplied by a Clock and owned by one waiting Acquire call.
+// That caller stops it on return; the bulkhead never closes its channel.
 type Timer interface {
+	// C returns the usable timeout notification channel, without closure ownership.
 	C() <-chan time.Time
+	// Stop promptly releases timer resources and reports whether firing was prevented.
 	Stop() bool
 }
 
-// Observer receives immutable bounded lifecycle events synchronously. It runs
-// outside internal locks; its return value and panics never alter admission.
+// Observer receives copied bounded lifecycle events synchronously. It runs
+// outside internal locks; returned errors and panics do not reverse committed
+// admission. Calls may overlap, and delivery order can differ from state order.
+// Implementations must synchronize shared state and return promptly.
 type Observer interface {
+	// Observe receives metadata by value. Snapshot/Close reentry is allowed;
+	// reentrant side effects still take effect. Waiting on the current call's
+	// own admission/release (for example through Drain) can prevent that call
+	// from completing. Blocking adds to admission, release and shutdown latency.
 	Observe(Event) error
 }
 
 // ObserveFunc adapts a function to Observer.
 type ObserveFunc func(Event) error
 
-// Observe invokes function.
+// Observe invokes the adapted function. Direct invocation of a nil function
+// panics; New rejects typed nil observers.
 func (function ObserveFunc) Observe(event Event) error { return function(event) }
 
 // Config contains immutable construction parameters for one resource partition.
 type Config struct {
-	Resource       string
-	Capacity       int64
-	Admission      AdmissionPolicy
-	Observer       Observer
-	Clock          Clock
+	// Resource is non-empty, at most MaxResourceBytes bytes, begins with an ASCII
+	// letter/digit and otherwise uses letters, digits or . _ : / -. The caller
+	// must choose stable non-secret classes, not arbitrary request identifiers.
+	Resource string
+	// Capacity is positive weighted capacity, fixed for this policy's lifetime.
+	Capacity int64
+	// Admission defaults to immediate rejection when nil; use a concrete Wait
+	// value for a bounded FIFO queue. Pointer/custom policy values are unsupported.
+	Admission AdmissionPolicy
+	// Observer is optional and borrowed; its state remains caller-owned.
+	Observer Observer
+	// Clock is borrowed, or nil for the standard clock. Typed nil is invalid.
+	Clock Clock
+	// PolicyRevision is optional and uses Resource's length/character bounds.
+	// It labels a revision but does not reconfigure or replace the policy.
 	PolicyRevision string
 }
 
+// normalizedConfig copies policy values but borrows observer/clock references;
+// construction validates caller labels before storing them in events or indexes.
 type normalizedConfig struct {
 	resource       string
 	capacity       int64

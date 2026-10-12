@@ -15,6 +15,8 @@ import (
 	"golang.org/x/sync/semaphore"
 )
 
+// BenchmarkBulkheadAcquireRelease measures capacity-one admitted acquire/release;
+// policy/context construction is outside timing.
 func BenchmarkBulkheadAcquireRelease(b *testing.B) {
 	policy := mustBenchmarkPolicy(b)
 	ctx := context.Background()
@@ -29,6 +31,8 @@ func BenchmarkBulkheadAcquireRelease(b *testing.B) {
 	}
 }
 
+// BenchmarkBulkheadRejected measures capacity-one immediate refusal with a held
+// permit; policy/context/holder setup is outside timing.
 func BenchmarkBulkheadRejected(b *testing.B) {
 	policy := mustBenchmarkPolicy(b)
 	holder, _ := policy.Acquire(context.Background(), 1)
@@ -41,6 +45,8 @@ func BenchmarkBulkheadRejected(b *testing.B) {
 	}
 }
 
+// BenchmarkXSyncSemaphoreAcquireRelease measures capacity-one semaphore calls
+// without Bulkhead lifecycle/counter work; construction is outside timing.
 func BenchmarkXSyncSemaphoreAcquireRelease(b *testing.B) {
 	policy := semaphore.NewWeighted(1)
 	ctx := context.Background()
@@ -52,6 +58,8 @@ func BenchmarkXSyncSemaphoreAcquireRelease(b *testing.B) {
 	}
 }
 
+// BenchmarkFailsafeGoAcquireRelease measures capacity-one Failsafe permit calls;
+// setup is excluded and its ownership/observation contract differs from Bulkhead.
 func BenchmarkFailsafeGoAcquireRelease(b *testing.B) {
 	policy := failsafebulkhead.New[any](1)
 	ctx := context.Background()
@@ -63,6 +71,8 @@ func BenchmarkFailsafeGoAcquireRelease(b *testing.B) {
 	}
 }
 
+// BenchmarkRejectedFastPath compares held-capacity-one refusal through native
+// error/boolean APIs. Each subbenchmark excludes policy and holder setup.
 func BenchmarkRejectedFastPath(b *testing.B) {
 	b.Run("Bulkhead", func(b *testing.B) {
 		policy := mustBenchmarkPolicy(b)
@@ -113,6 +123,8 @@ func BenchmarkRejectedFastPath(b *testing.B) {
 
 }
 
+// BenchmarkBulkheadParallelThroughput uses unit weights and capacity GOMAXPROCS,
+// including shared outcome-counter costs; policy setup is outside timing.
 func BenchmarkBulkheadParallelThroughput(b *testing.B) {
 	policy, err := bulkhead.New(bulkhead.Config{Resource: "benchmark", Capacity: int64(runtime.GOMAXPROCS(0))})
 	if err != nil {
@@ -138,6 +150,9 @@ func BenchmarkBulkheadParallelThroughput(b *testing.B) {
 	b.ReportMetric(float64(rejected.Load())/float64(b.N), "rejected/op")
 }
 
+// BenchmarkBulkheadWaitWakeupLatency uses one queued unit-weight caller.
+// Percentiles measure release-to-receive latency; loop timing also includes queue
+// setup/goroutines. Initial policy/holder/sample allocation is excluded.
 func BenchmarkBulkheadWaitWakeupLatency(b *testing.B) {
 	policy, err := bulkhead.New(bulkhead.Config{
 		Resource:  "benchmark",
@@ -178,6 +193,8 @@ func BenchmarkBulkheadWaitWakeupLatency(b *testing.B) {
 	reportWaitPercentiles(b, samples)
 }
 
+// BenchmarkBulkheadCancellationChurn times queue formation and cancellation
+// of one caller per iteration, excluding fixed capacity-one policy/holder setup.
 func BenchmarkBulkheadCancellationChurn(b *testing.B) {
 	policy, err := bulkhead.New(bulkhead.Config{
 		Resource:  "benchmark",
@@ -210,6 +227,9 @@ func BenchmarkBulkheadCancellationChurn(b *testing.B) {
 	}
 }
 
+// BenchmarkBulkheadFIFOFairness includes fresh policy construction and eight
+// queued callers per iteration; it reports observed ordering violations, not a
+// proof of fairness for arbitrary workloads.
 func BenchmarkBulkheadFIFOFairness(b *testing.B) {
 	const waiters = 8
 	var violations uint64
@@ -260,6 +280,8 @@ func BenchmarkBulkheadFIFOFairness(b *testing.B) {
 	b.ReportMetric(float64(violations)/float64(b.N), "fifo-violations/op")
 }
 
+// BenchmarkBulkheadObserver includes two synchronous atomic observer updates
+// per capacity-one acquire/release pair; policy construction is excluded.
 func BenchmarkBulkheadObserver(b *testing.B) {
 	var observations atomic.Uint64
 	policy, err := bulkhead.New(bulkhead.Config{
@@ -289,6 +311,8 @@ func BenchmarkBulkheadObserver(b *testing.B) {
 	}
 }
 
+// BenchmarkBulkheadPartitions cycles Lookup through 128 pre-created partitions;
+// registry/policy/key construction is outside timing.
 func BenchmarkBulkheadPartitions(b *testing.B) {
 	const partitions = 128
 	registry, err := bulkhead.NewRegistry(bulkhead.FixedPartitions{Maximum: partitions})
@@ -333,6 +357,8 @@ func benchmarkWaitForQueueDepth(b *testing.B, policy *bulkhead.Bulkhead, want in
 	b.Fatalf("QueueDepth did not reach %d; snapshot = %+v", want, policy.Snapshot())
 }
 
+// reportWaitPercentiles sorts recorded samples after timing; nearest-rank
+// percentiles include the caller-side receive scheduling delay, not only grant.
 func reportWaitPercentiles(b *testing.B, samples []time.Duration) {
 	b.Helper()
 	if len(samples) == 0 {

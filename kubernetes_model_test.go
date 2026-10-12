@@ -121,6 +121,9 @@ func TestKubernetesScaleUpScaleDownAndMixedRevisionsRemainProcessLocal(t *testin
 	_ = coldPermit.Release()
 }
 
+// podModel is a sequential application-shutdown model, not a Kubernetes client
+// or live-cluster probe. Its readiness/kill flags are caller-owned; Bulkhead alone
+// cannot certify work completion after abrupt process loss.
 type podModel struct {
 	policy         *bulkhead.Bulkhead
 	ready          bool

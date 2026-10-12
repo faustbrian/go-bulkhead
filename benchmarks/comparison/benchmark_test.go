@@ -1,3 +1,9 @@
+// Package comparison_test is a non-releasable benchmark harness for capacity-one
+// admitted/saturated Bulkhead, x/sync, Failsafe and Fortify APIs. Candidates have
+// different lifecycle/queue/error contracts; results are not interchangeable
+// production guarantees. This test-only module uses published dependencies and
+// adds no optional infrastructure or cgo bindings to the public Bulkhead package.
+// Run benchmarks from this module with workspace resolution disabled.
 package comparison_test
 
 import (
@@ -10,6 +16,9 @@ import (
 	"golang.org/x/sync/semaphore"
 )
 
+// BenchmarkAdmittedFastPath excludes policy/context setup and measures
+// capacity-one acquire/release for native permit APIs, versus a no-op Execute
+// callback for Fortify. These paths include different lifecycle/observation work.
 func BenchmarkAdmittedFastPath(b *testing.B) {
 	b.Run("Bulkhead", func(b *testing.B) {
 		policy := mustPolicy(b)
@@ -65,6 +74,9 @@ func BenchmarkAdmittedFastPath(b *testing.B) {
 	})
 }
 
+// BenchmarkRejectedFastPath holds all capacity before timing immediate refusal.
+// The Fortify holder goroutine and final cleanup are outside timing; its refusal
+// uses Execute, unlike the permit/error or boolean APIs of the other candidates.
 func BenchmarkRejectedFastPath(b *testing.B) {
 	b.Run("Bulkhead", func(b *testing.B) {
 		policy := mustPolicy(b)

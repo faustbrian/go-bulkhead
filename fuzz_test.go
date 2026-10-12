@@ -9,6 +9,9 @@ import (
 	"github.com/faustbrian/go-bulkhead"
 )
 
+// FuzzConfigurationNeverPanics varies caller labels, capacity, queue count and
+// signed nanosecond wait bounds without dispatching work. Rejections must wrap
+// ErrInvalidConfig; accepted policies retain positive capacity and bounded labels.
 func FuzzConfigurationNeverPanics(fuzz *testing.F) {
 	fuzz.Add("database", int64(1), 1, int64(time.Millisecond))
 	fuzz.Add("", int64(0), 0, int64(0))
@@ -35,6 +38,9 @@ func FuzzConfigurationNeverPanics(fuzz *testing.F) {
 	})
 }
 
+// FuzzPermitHistoriesConserveCapacity truncates byte histories to 256 actions
+// on capacity four, mixing weights 1..4 with release. Every step conserves
+// active+available capacity; remaining permits are released at the end.
 func FuzzPermitHistoriesConserveCapacity(fuzz *testing.F) {
 	fuzz.Add([]byte{0, 1, 2, 3, 4, 5})
 	fuzz.Add([]byte{255, 0, 255})

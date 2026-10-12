@@ -1,3 +1,10 @@
+// Package resilience_test is a non-releasable, test-only composition harness for
+// published Bulkhead, Retry v2.1, Circuit Breaker and Resilience v2 contracts.
+// It models application-owned retry-before-bulkhead-before-breaker ordering so
+// local refusal dispatches no downstream work; attached budget tests also check
+// retry lineage and permit completion. It does not run real external services or
+// introduce adapters/cgo into the public package. Run tests within this module
+// with workspace resolution disabled; the public root package owns admission.
 package resilience_test
 
 import (

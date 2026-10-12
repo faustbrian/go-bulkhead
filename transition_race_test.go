@@ -290,6 +290,9 @@ func assertDrainedConservation(t *testing.T, policy *bulkhead.Bulkhead, history 
 	}
 }
 
+// transitionClock exposes one timer registration per history. expire and Stop
+// arbitrate one terminal notification with the timer atomic; mu protects time
+// and registration so tests can race expiry against grant without sleep timing.
 type transitionClock struct {
 	mu           sync.Mutex
 	now          time.Time

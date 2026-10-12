@@ -361,6 +361,9 @@ type testTimer struct{ *time.Timer }
 
 func (timer testTimer) C() <-chan time.Time { return timer.Timer.C }
 
+// delayedClock advances absolute time without firing positive-duration timers.
+// This separates admission deadline enforcement from timely timer notification;
+// it is a controlled fault fixture, not a production Clock implementation.
 type delayedClock struct {
 	mu             sync.Mutex
 	now            time.Time

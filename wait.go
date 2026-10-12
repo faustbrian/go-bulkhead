@@ -7,6 +7,9 @@ import (
 	"time"
 )
 
+// waiter state/list membership is owned by Bulkhead.mu. A grant, expiry or Close
+// closes ready exactly once under that lock; acquiring callers only receive it.
+// Terminal nodes can remain queued until their own finishWait removes them.
 type waiter struct {
 	weight   int64
 	deadline time.Time
@@ -50,6 +53,8 @@ func (bulkhead *Bulkhead) finishWait(
 	waited := nonNegativeDuration(now.Sub(start))
 
 	bulkhead.mu.Lock()
+	// Capacity was already acquired under mu; a subsequently selected context or
+	// timer signal cannot turn this grant into rejection or release it speculatively.
 	if waiter.granted {
 		bulkhead.totalWait += waited
 		event := bulkhead.eventLocked(EventAdmitted, "", waiter.weight, waited, 0)
@@ -85,6 +90,8 @@ func (bulkhead *Bulkhead) grantWaitersLocked(now time.Time) {
 			element = next
 			continue
 		}
+		// Absolute time, not notification delivery, decides expiry. Keep the node
+		// counted until its caller finishes, but let later live heads proceed.
 		if !now.Before(waiter.deadline) {
 			waiter.done = true
 			waiter.terminal = ErrWaitTimeout
@@ -92,6 +99,8 @@ func (bulkhead *Bulkhead) grantWaitersLocked(now time.Time) {
 			element = next
 			continue
 		}
+		// Stop at the first live head that cannot fit: lighter arrivals must not
+		// bypass it. Cancellation removal retries the next head through finishWait.
 		if !bulkhead.semaphore.TryAcquire(waiter.weight) {
 			return
 		}
