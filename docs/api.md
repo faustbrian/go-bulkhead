@@ -1,5 +1,7 @@
 # API
 
+[Documentation index](README.md)
+
 ## Construction
 
 `New(Config)` constructs one immutable policy. `Resource` must be a non-secret,

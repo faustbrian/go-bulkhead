@@ -1,5 +1,7 @@
 # Performance
 
+[Documentation index](README.md)
+
 The non-releasable `benchmarks/comparison` module compares:
 
 - this package's admission policy and owned permit;
@@ -81,3 +83,5 @@ sample, and all five fairness samples reported zero FIFO violations. The
 every result and environment field. Candidate operations expose different
 metadata, error, queue, fairness, panic, and shutdown semantics, so the table
 is a cost baseline rather than a ranking.
+
+Continue with [API](api.md).

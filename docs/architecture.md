@@ -1,5 +1,7 @@
 # Architecture and invariants
 
+[Documentation index](README.md)
+
 ## Ownership
 
 The `Bulkhead` mutex is the single synchronization owner for policy state:
@@ -62,3 +64,5 @@ and eviction is never automatic.
 - Drain does not invent cancellation or completion of admitted work.
 - State is process-local; cluster-wide admission requires a distributed system
   with lease and fencing semantics.
+
+Continue with [API](api.md).

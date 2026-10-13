@@ -1,5 +1,7 @@
 # Operations
 
+[Documentation index](README.md)
+
 ## Metrics
 
 Export snapshots or events with bounded labels:
@@ -46,3 +48,5 @@ downstream fleet limit after HPA or rollout surge.
 Stop traffic first, close all bulkheads, cancel application request roots, and
 drain under the pod deadline. `ErrDrainIncomplete` means live admitted work was
 not reclaimed. Record it as ambiguous rather than successful cancellation.
+
+Continue with [API](api.md).

@@ -1,5 +1,7 @@
 # Assurance
 
+[Documentation index](README.md)
+
 ## Reference baseline
 
 Consulted on 2026-08-02:
@@ -72,3 +74,5 @@ after abrupt process kill, enforce cluster-wide capacity, choose retry or
 fallback policy, or prevent a caller from abandoning a standalone permit.
 Applications must size against maximum simultaneous pods and use bounded
 transport contexts.
+
+Continue with [API](api.md).

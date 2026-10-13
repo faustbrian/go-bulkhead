@@ -1,5 +1,7 @@
 # FAQ
 
+[Documentation index](README.md)
+
 ## Why not use only a semaphore?
 
 A semaphore counts permits. This package adds stable resource identity,

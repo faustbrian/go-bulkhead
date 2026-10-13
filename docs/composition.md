@@ -1,5 +1,7 @@
 # Composition
 
+[Documentation index](README.md)
+
 Composition is application policy. `bulkhead` does not import retry, breaker,
 rate-limit, adaptive-limit, hedge, cache, timeout, or fallback packages.
 
@@ -81,3 +83,5 @@ The caller or transport owns attempt timeouts. A timeout does not stop a Go
 callback that ignores cancellation, so the bulkhead retains its permit until
 return. Fallback choice belongs outside generic resilience policies because it
 can carry freshness, authorization, or financial semantics.
+
+Continue with [API](api.md).

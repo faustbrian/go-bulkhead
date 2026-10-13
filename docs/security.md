@@ -1,5 +1,7 @@
 # Security
 
+[Documentation index](README.md)
+
 ## Threat model
 
 The versioned [security model v1](security/threat-model-v1.md) records the

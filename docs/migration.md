@@ -1,5 +1,7 @@
 # Migration
 
+[Documentation index](README.md)
+
 ## From a buffered channel
 
 Replace channel send/receive ownership with `Acquire` and `Permit.Release`.
@@ -35,3 +37,5 @@ Deploy metrics first, choose capacity from maximum replicas and fan-out, then
 enable immediate rejection. Add a small bounded wait only when callers benefit
 from short smoothing. During policy changes, account for old and new pod
 capacities simultaneously and drain the old revision.
+
+Continue with [API](api.md).

@@ -1,5 +1,7 @@
 # Security model v1
 
+[Documentation index](../README.md)
+
 Model version: 1. Reviewed on 2026-09-30 against root module source
 `1224c26e9737f50f584a5d2cfbcd3e25ed88e6f9` (Go 1.27), public release
 `v1.0.0`. This model documents existing behavior; it does not certify all

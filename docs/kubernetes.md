@@ -1,5 +1,7 @@
 # Kubernetes and sizing
 
+[Documentation index](README.md)
+
 ## Scope
 
 Bulkheads are in-memory and process-local. Capacity `C` on `R` simultaneously
@@ -84,3 +86,5 @@ Rejection can lower CPU because less work executes. CPU-only HPA can therefore
 scale down during saturation. Alert on bounded queue depth, rejection reason,
 wait latency, drain duration, and downstream signals. Custom HPA signals need
 stabilization and missing-series behavior that avoid positive feedback.
+
+Continue with [API](api.md).

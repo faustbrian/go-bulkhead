@@ -1,5 +1,7 @@
 # Source documentation audit
 
+[Documentation index](README.md)
+
 ## Scope and acceptance
 
 Tier A source/API documentation pass from
@@ -175,3 +177,5 @@ The local `source-docs-check` target is required by ordinary/full checks and CI.
 Shared CI uses `source_documentation: check` with the immutable Tools v2.4.0
 workflow and matching authenticated binary/checksum declaration. Structural
 checks do not replace this maintained semantic audit or native docs/examples.
+
+Continue with [API](api.md).
