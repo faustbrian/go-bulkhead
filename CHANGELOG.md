@@ -10,6 +10,12 @@ All notable changes to this module are documented here.
   synchronous observer reentrancy, drain completion boundaries and defensive
   snapshot semantics in source/API documentation without changing behavior.
 
+## 1.1.3 - 2026-10-22
+
+### Changed
+
+- Publish the current source and documentation with a fresh immutable tag.
+
 ## 1.1.2 - 2026-10-07
 
 ### Changed
