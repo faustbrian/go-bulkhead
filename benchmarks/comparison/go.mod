@@ -11,5 +11,6 @@ require (
 
 require (
 	github.com/bits-and-blooms/bitset v1.24.4 // indirect
+	golang.org/x/sys v0.48.0 // indirect
 	google.golang.org/grpc v1.83.2 // indirect
 )
